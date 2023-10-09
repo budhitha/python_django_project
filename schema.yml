@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: Car parts online API
+  version: 1.0.0
+paths:
+  /:
+    get:
+      operationId: root_retrieve
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - corejson
+          - openapi
+          - swagger
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /client/shopping:
+    get:
+      operationId: client_shopping_retrieve
+      description: An overview of all the products or if car part id mention then
+        give specific part details
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: client_shopping_create
+      description: Add items to the cart
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: client_shopping_update
+      description: Update delivery date and time with given part_id if exists
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: client_shopping_destroy
+      description: Deletes the item with given part_id if exists
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /client/shopping/{car_part_id}:
+    get:
+      operationId: client_shopping_retrieve_2
+      description: An overview of all the products or if car part id mention then
+        give specific part details
+      parameters:
+      - in: path
+        name: car_part_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: client_shopping_create_2
+      description: Add items to the cart
+      parameters:
+      - in: path
+        name: car_part_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: client_shopping_update_2
+      description: Update delivery date and time with given part_id if exists
+      parameters:
+      - in: path
+        name: car_part_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: client_shopping_destroy_2
+      description: Deletes the item with given part_id if exists
+      parameters:
+      - in: path
+        name: car_part_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /client/shopping/purchase:
+    post:
+      operationId: client_shopping_purchase_create
+      description: Order the current contents in my shopping cart
+      tags:
+      - client
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /company/car_parts:
+    get:
+      operationId: company_car_parts_retrieve
+      description: Get all the available parts
+      tags:
+      - company
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: company_car_parts_create
+      description: Add items to the car pats
+      tags:
+      - company
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

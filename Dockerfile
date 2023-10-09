@@ -1,5 +1,5 @@
 FROM python:3.10
-LABEL author='Label A'
+LABEL author='Budhitha Perera'
 
 WORKDIR /app
 
