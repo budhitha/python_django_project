@@ -1,0 +1,21 @@
+version: '1.0'
+
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/workspaces:cached
+    network_mode: service:db
+  db:
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - autocompany/.env
+    ports:
+      - "80:80"
+
+volumes:
+  postgres-data:

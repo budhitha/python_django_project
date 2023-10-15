@@ -1,5 +1,5 @@
 env/
-.env
+autocompany/.env
 .git
 .gitlab-ci.yml
 example.env

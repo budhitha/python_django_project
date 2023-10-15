@@ -1,12 +1,5 @@
 from rest_framework import serializers
-from .models import Customer, ShoppingCart
-
-
-class CustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = '__all__'
-
+from .models import ShoppingCart
 
 class ShoppingCartSerializer(serializers.ModelSerializer):
     class Meta:

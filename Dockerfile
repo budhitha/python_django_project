@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11
 LABEL author='Budhitha Perera'
 
 WORKDIR /app
@@ -18,13 +18,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy our codebase into the container
 COPY . .
 
-RUN ./manage.py collectstatic --noinput
-
 # Ops Parameters
 ENV WORKERS=2
 ENV PORT=80
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE ${PORT}
+RUN ./manage.py migrate
+RUN ./manage.py createsuperuser
+RUN ./manage.py runserver
 
-CMD uwsgi --http :${PORT} --processes ${WORKERS} --static-map /static=/static --module autocompany.wsgi:application
+EXPOSE ${PORT}

@@ -48,10 +48,68 @@ How to score bonus points (ergo: we really advise you to tackle it this way):
 
 If you have any questions, feel free to contact us! Any feedback on this exercise is always welcome!
 
+Project setup guide
+---------
+
+**Want to run the project?**
+
+- Extract the zip file
+- Create pyenv virtualenv
+    ```shell
+    PYTHON_VER=3.11.2
+    pyenv install $PYTHON_VER
+    pyenv virtualenv $PYTHON_VER auto_parts
+    ```
+- Install the requirements
+    ```shell
+    pip install -r requirements.txt
+    ```
+- Environment variables configure
+  - Create a new file in `autocompany` folder
+  - Name it as `.env`
+  - Configure the following properties according to your postgres DB configs\
+    e.g.,
+      ```commandline
+      DATABASE_NAME=postgres
+      DATABASE_USER=postgres
+      DATABASE_PASS=postgres
+      DATABASE_HOST=localhost
+      DATABASE_PORT=5432
+      ```
+- Generate new tables
+    ```shell
+    python manage.py migrate
+    ```
+- Create django super user
+    ```shell
+    python manage.py createsuperuser
+    ```
+- Run the server
+    ```shell
+    python manage.py runserver localhost:8080
+    ```
+- Navigate to http://localhost:8080/docs/
+
 
 **Want to run the project in Docker?**
 
-- ```docker build -t autocompany .```
-- ``` docker run -p 80:80 -d autocompany```
-- Navigate to ```http://127.0.0.1/```
+- ```shell
+  docker compose up
+  ``` 
+- Create django super user
+    - List down all docker containers
+      ```shell
+      docker ps
+      ```
+    - Obtain the image name with `*_devcontainer` and copy the container ID
+    - Let's log in to the container
+      ```shell
+      docker exec -it <CONTAINER ID> bash
+      ```
+    - Then run below command
+      ```shell
+      python manage.py createsuperuser
+      ```
+
+- Navigate to http://localhost:8080/docs/
 

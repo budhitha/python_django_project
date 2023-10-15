@@ -8,7 +8,7 @@ from rest_framework import permissions
 
 from company.models import CarParts
 from company.serializers import CarPartsSerializer
-from .models import ShoppingCart, Customer
+from .models import ShoppingCart
 from .serializers import ShoppingCartSerializer
 
 
@@ -39,8 +39,7 @@ class ClientApiView(APIView):
     def post(self, request, *args, **kwargs):
         """Add items to the cart"""
         car_part_id = request.data.get('part_id')
-        customer_id = request.user.id
-        data = {'quantity': request.data.get('quantity'), 'customer': Customer.objects.get(user=customer_id).id,
+        data = {'quantity': request.data.get('quantity'), 'customer': request.user.id,
                 'car_part': CarParts.objects.get(id=car_part_id).id}
 
         serializer = ShoppingCartSerializer(data=data)
@@ -52,7 +51,7 @@ class ClientApiView(APIView):
 
     def delete(self, request, car_part_id, *args, **kwargs):
         """Deletes the item with given part_id if exists"""
-        cart_instance = ShoppingCart.objects.filter(customer=Customer.objects.get(user=request.user.id).id,
+        cart_instance = ShoppingCart.objects.filter(customer=request.user.id,
                                                     car_part=car_part_id).first()
         if not cart_instance:
             return Response(
@@ -65,9 +64,9 @@ class ClientApiView(APIView):
             status=status.HTTP_200_OK
         )
 
-    def put(self, request, car_part_id, *args, **kwargs):
+    def patch(self, request, car_part_id, *args, **kwargs):
         """Update delivery date and time with given part_id if exists"""
-        cart_instance = ShoppingCart.objects.filter(customer=Customer.objects.get(user=request.user.id).id,
+        cart_instance = ShoppingCart.objects.filter(customer=request.user.id,
                                                     car_part=car_part_id).first()
         if not cart_instance:
             return Response(
@@ -95,7 +94,7 @@ class ClientApiPurchasedView(APIView):
 
     def post(self, request, *args, **kwargs):
         """Order the current contents in my shopping cart"""
-        cart_instance = ShoppingCart.objects.filter(customer=Customer.objects.get(user=request.user.id).id).all()
+        cart_instance = ShoppingCart.objects.filter(customer=request.user.id).all()
         if not cart_instance:
             return Response(
                 {"res": "Your shopping cart empty"},
